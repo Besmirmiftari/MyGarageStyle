@@ -1,0 +1,87 @@
+﻿@model PVCViewModel
+
+@{ 
+    ViewData["Title"] = "AddPVC";
+}
+
+
+                <h1 class="title">ADD NEW</h1>
+                <form asp-action="AddPVC" method="post" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Title" class="control-label"></label>
+                        <input asp-for="Title" class="form-control" required />
+                        <span asp-validation-for="Title" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Dimensions" class="control-label"></label>
+                        <input asp-for="Dimensions" class="form-control" required />
+                        <span asp-validation-for="Dimensions" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Thickness" class="control-label"></label>
+                        <input asp-for="Thickness" class="form-control" required />
+                        <span asp-validation-for="Thickness" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Weight" class="control-label"></label>
+                        <input asp-for="Weight" class="form-control" required />
+                        <span asp-validation-for="Weight" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Guarantee" class="control-label"></label>
+                        <input asp-for="Guarantee" class="form-control" required />
+                        <span asp-validation-for="Guarantee" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Anticipated_Service_Life" class="control-label"></label>
+                        <input asp-for="Anticipated_Service_Life" class="form-control" required />
+                        <span asp-validation-for="Anticipated_Service_Life" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Material" class="control-label"></label>
+                        <input asp-for="Material" class="form-control" required />
+                        <span asp-validation-for="Material" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Joint" class="control-label"></label>
+                        <input asp-for="Joint" class="form-control" required />
+                        <span asp-validation-for="Joint" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-control">In Stock</label>
+                        <select asp-for="InStock" class="form-control">
+                            <option class="form-control" value=true>In Stock</option>
+                            <option class="form-control" value=false>Out of Stock</option>
+
+                        </select>
+                        <span asp-validation-for="InStock" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Price" class="control-label"></label>
+                        <input asp-for="Price" class="form-control" required />
+                        <span asp-validation-for="Price" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Description" class="control-label"></label>
+                        <textarea asp-for="Description" class="form-control" required rows="8"></textarea>
+
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="DefaultImage" class="control-label"></label>
+                        <input asp-for="DefaultImage" class="form-control pb-5 pt-3" required />
+                        <span asp-validation-for="DefaultImage" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Images" class="control-label"></label>
+                        <input asp-for="Images" class="form-control pb-5 pt-3" />
+                        <span asp-validation-for="Images" class="text-danger" required></span>
+                    </div>
+
+                    <div class="form-group d-flex justify-content-center">
+                        <input type="submit" value="Create" class="btn btn-dark" />
+                    </div>
+                </form>

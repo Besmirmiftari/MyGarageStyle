@@ -1,0 +1,137 @@
+﻿@model PaginatedList<PVC>
+
+<head>
+    <link rel="icon" type="image/x-icon" href="~/Template/assets/favicon.ico" />
+    <!-- Font Awesome icons (free version)-->
+    <script src="https://use.fontawesome.com/releases/v5.15.3/js/all.js" crossorigin="anonymous"></script>
+    <!-- Google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="~/Template/css/styles.css" rel="stylesheet" />
+    <style>
+        img {
+            float: left;
+            width: 200px;
+            height: 300px;
+            object-fit: cover;
+        }
+
+        .over {
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+    </style>
+</head>
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav" style="background-color: black; display:flex; ">
+    <div class="container">
+
+        <a class="nav-link  text-uppercase py-4 py-lg-0" asp-action="Index"><i class="fas fa-arrow-left text-primary mx-2"></i>Back to Home</a></i>
+
+    </div>
+</nav>
+
+<section class="page-section bg-light" id="portfolio">
+
+    <div class="container">
+        <div class="text-center">
+            <h2 class="section-heading text-uppercase">Products</h2>
+            <h3 class="section-subheading text-muted">Click on a product to view the details.</h3>
+
+        </div>
+        <div class="row">
+
+
+            <!-- Card deck -->
+            <div class="card-deck row">
+
+                @foreach (var pvc in Model)
+                {
+                    string encoded = Convert.ToBase64String(pvc.DefaultImage);
+                    string photo = string.Format("data:image/gif;base64,{0}", encoded);
+                    <div class="col-xs-12 col-sm-6 col-md-4" style="margin-bottom:50px;">
+                        <!-- Card -->
+                        <div class="card">
+
+                            <!--Card image-->
+                            <div class="view overlay">
+                                <a asp-area="Home" asp-controller="Home" asp-action="ProductDetails" asp-route-id="@pvc.Id"><img class="card-img-top" src="@photo" alt="Card image cap"></a>
+                                <a href="#!">
+                                    <div class="mask rgba-white-slight"></div>
+                                </a>
+                            </div>
+
+                            <!--Card content-->
+                            <div class="card-body">
+
+                                <!--Title-->
+                                <a asp-area="" asp-controller="Home" asp-action="ProductDetails" asp-route-id="@pvc.Id" style="color:black; text-decoration: none; "><h5 class="card-title over">@pvc.Title</h5></a>
+                                
+                                <!--Text-->
+                                @if (pvc.InStock)
+                                {
+                                    <p class="card-text">In Stock</p>
+                                }
+                                else
+                                {
+                                    <p class="card-text">Out of Stock</p>
+                                }
+                                <p class="card-text">Price: @pvc.Price</p>
+
+
+
+
+                            </div>
+
+                        </div>
+                        <!-- Card -->
+                    </div>
+
+                }
+            </div>
+        </div>
+        <!-- Card deck -->
+
+    </div> 
+
+
+
+
+
+
+
+
+
+
+
+    @{
+        var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+        var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+    }
+
+    <div class="container">
+        <a asp-action="Products"
+           asp-route-pageNumber="@(Model.PageIndex - 1)"
+           class="btn btn-dark @prevDisabled">
+            Previous
+        </a>
+        <a asp-action="Products"
+           asp-route-pageNumber="@(Model.PageIndex + 1)"
+           class="btn btn-dark @nextDisabled">
+            Next
+        </a>
+    </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,126 @@
+﻿@model MyGarageStyle.Models.PVC
+
+@{
+    string defaultEncoded = Convert.ToBase64String(Model.DefaultImage);
+    string defaultPhoto = string.Format("data:image/gif;base64,{0}", defaultEncoded);
+}
+
+<head>
+
+    <link href="~/css/productDetails.css" rel="stylesheet" />
+
+</head>
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav" style="background-color: black; display:flex; ">
+    <div class="container">
+
+        <a class="nav-link  text-uppercase py-4 py-lg-0" asp-action="Products"><i class="fas fa-arrow-left text-primary mx-2"></i>View Products</a>
+        
+    </div>
+</nav>
+
+
+<div class="text-center">
+    <h2 class="section-heading text-uppercase">Product details</h2>
+    <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
+</div>
+<div class="container">
+    <div class="card">
+        <!-- card left -->
+        <div class="product-imgs">
+            <div class="img-display">
+                <div class="img-showcase">
+                    <img src="@defaultPhoto" alt="product image">
+                    @foreach (var obj in ViewBag.productDetailsImages)
+                    {
+                        string encoded = Convert.ToBase64String(obj.Image);
+                        string photo = string.Format("data:image/gif;base64,{0}", encoded);
+                        <img src="@photo" alt="product image">
+                    }
+
+
+                </div>
+            </div>
+            <div class="img-select">
+                <div class="img-item">
+                    <a href="#" data-id="1">
+                        <img src="@defaultPhoto" alt="product image">
+                    </a>
+                </div>
+                @{  var dataId = 2; }
+                @foreach (var obj in ViewBag.productDetailsImages)
+                {
+
+                    string encoded = Convert.ToBase64String(obj.Image);
+                    string photo = string.Format("data:image/gif;base64,{0}", encoded);
+
+
+                    <div class="img-item">
+                        <a href="#" data-id="@dataId">
+                            <img src="@photo" alt="product image">
+                        </a>
+                    </div>
+                    dataId++;
+                }
+
+            </div>
+        </div>
+        <!-- card right -->
+        <div class="product-content">
+            <h1 class="product">@Model.Title</h1>
+
+            <div class="product-detail">
+                <h3>about this item: </h3>
+                <p>
+                    @Model.Description
+                </p>
+
+                <ul>
+                    <li>Dimensions: <span>@Model.Dimensions</span></li>
+                    <li>Thickness: <span>@Model.Thickness</span></li>
+                    <li>Weight: <span>@Model.Weight</span></li>
+                    <li>Guarantee: <span>@Model.Guarantee</span></li>
+                    <li>Anticipated service life: <span>@Model.Anticipated_Service_Life</span></li>
+                    <li>Material: <span>@Model.Material</span></li>
+                    <li>Joint: <span>@Model.Joint</span></li>
+                    @if (Model.InStock)
+                    {
+                        <li>Stock: <span>In Stock</span></li>
+                    }
+                    else
+                    {
+                        <li>Stock: <span>Out of Stock</span></li>
+                    }
+
+
+                </ul>
+                <div class="product-price">
+                    <h4 class="new-price">Price: <span>@Model.Price</span></h4>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+<script>
+    const imgs = document.querySelectorAll('.img-select a');
+    const imgBtns = [...imgs];
+    let imgId = 1;
+
+    imgBtns.forEach((imgItem) => {
+        imgItem.addEventListener('click', (event) => {
+            event.preventDefault();
+            imgId = imgItem.dataset.id;
+            slideImage();
+        });
+    });
+
+    function slideImage() {
+        const displayWidth = document.querySelector('.img-showcase img:first-child').clientWidth;
+
+        document.querySelector('.img-showcase').style.transform = `translateX(${- (imgId - 1) * displayWidth}px)`;
+    }
+
+    window.addEventListener('resize', slideImage);
+</script>
